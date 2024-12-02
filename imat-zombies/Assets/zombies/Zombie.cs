@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Zombie : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     private int rutine;
     public float timer;
     private Animator animator;
@@ -52,10 +52,8 @@ public class Zombie : MonoBehaviour
         }
         else {
             if (Vector3.Distance(transform.position, target.transform.position) > 1 && !attacking) {
-                var lookPos = target.transform.position - transform.position;
-                lookPos.y = 0;
-                var rotation = Quaternion.LookRotation(lookPos);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
+                Vector3 lookPos = GetTargetDirection();
+                RotateTowardsDirection(lookPos);
                 animator.SetBool("walk", false);
 
                 animator.SetBool("run", true);
@@ -71,6 +69,17 @@ public class Zombie : MonoBehaviour
                 attacking = true;
             }
         }
+    }
+
+    private void RotateTowardsDirection(Vector3 lookPos) {
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
+    }
+
+    private Vector3 GetTargetDirection() {
+        Vector3 targetDirection = target.transform.position - transform.position;
+        targetDirection.y = 0;
+        return targetDirection;
     }
 
     public void EndAnimation() {
