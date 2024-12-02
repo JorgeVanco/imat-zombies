@@ -20,7 +20,6 @@ public class Zombie : MonoBehaviour
         target = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
     void Update()
     {
         ZombieBehaviour();
@@ -44,7 +43,8 @@ public class Zombie : MonoBehaviour
                     rutine++;
                     break;
                 case 2:
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, angle, 0.5f);
+                    RotateTowardsTarget();
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, angle, 180f);
                     transform.Translate(Vector3.forward * Time.deltaTime);
                     animator.SetBool("walk", true);
                     break;
@@ -52,8 +52,7 @@ public class Zombie : MonoBehaviour
         }
         else {
             if (Vector3.Distance(transform.position, target.transform.position) > 1 && !attacking) {
-                Vector3 lookPos = GetTargetDirection();
-                RotateTowardsDirection(lookPos);
+                RotateTowardsTarget();
                 animator.SetBool("walk", false);
 
                 animator.SetBool("run", true);
@@ -69,6 +68,11 @@ public class Zombie : MonoBehaviour
                 attacking = true;
             }
         }
+    }
+
+    private void RotateTowardsTarget() {
+        Vector3 lookPos = GetTargetDirection();
+        RotateTowardsDirection(lookPos);
     }
 
     private void RotateTowardsDirection(Vector3 lookPos) {
