@@ -86,8 +86,12 @@ public class Zombie : MonoBehaviour
         return targetDirection;
     }
 
-    public void EndAnimation() {
-        animator.SetBool("attack", false);
+    public void EndAttack() {
         attacking = false;
+        EndAttackAnimation();
+    }
+
+    public void EndAttackAnimation() {
+        animator.SetBool("attack", false);
     }
 }
