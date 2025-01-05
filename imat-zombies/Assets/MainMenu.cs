@@ -1,19 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void EscenaJuego()
+    public void LoadGameScene()
     {
         SceneManager.LoadScene("Juego");
     }
 
-    public void CargarNivel(string nombreNivel)
+    public void LoadDifficultyScene()
     {
-        SceneManager.LoadScene(nombreNivel);
+        SceneManager.LoadScene("Dificultad");
     }
 
     public void Salir()
