@@ -52,7 +52,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -6971855213891009681, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
+    - {fileID: -1847501099429938403, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -77,9 +79,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69de41559555ae949831872c5fb77b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  damage: 10
-  life: 100
-  speed: 0.7
+  speed: 0.8
   damage: 15
   life: 120
+  GroundCheck: {fileID: 4793211170202516346}
+  GroundDistance: 0.2
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!4 &4793211170202516346 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4906225228307912491, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
+  m_PrefabInstance: {fileID: 473583779626134609}
+  m_PrefabAsset: {fileID: 0}

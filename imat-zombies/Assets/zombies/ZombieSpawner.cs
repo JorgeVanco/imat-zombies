@@ -29,32 +29,43 @@ public class ZombieSpawner : MonoBehaviour
     }
 
     private void SpawnRandomZombie() {
-        // Generate a random spawn point within the defined limits
+        // Generate a random spawn point within the defined limits (on the X-Z plane)
         Vector3 randomSpawnPoint = new Vector3(
             UnityEngine.Random.Range(xSpawnLimits.x, xSpawnLimits.y),
-            0f,
+            50f, // Start the ray high above the terrain to ensure it hits
             UnityEngine.Random.Range(zSpawnLimits.x, zSpawnLimits.y)
         );
 
-        // Randomly choose a zombie type (e.g., fast, slow, normal)
-        int zombieType = UnityEngine.Random.Range(0, 3);
+        // Raycast to find the ground
+        Ray ray = new Ray(randomSpawnPoint, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) {
+            // Adjust the spawn point to be at the terrain's surface
+            randomSpawnPoint.y = hit.point.y;
 
-        GameObject spawnedZombie = null;
-        switch (zombieType) {
-            case 0:
-                spawnedZombie = zombieManager.SpawnFastZombie(randomSpawnPoint);
-                break;
-            case 1:
-                spawnedZombie = zombieManager.SpawnSlowZombie(randomSpawnPoint);
-                break;
-            case 2:
-                spawnedZombie = zombieManager.SpawnNormalZombie(randomSpawnPoint);
-                break;
-        }
+            // Check if the hit surface is valid (e.g., terrain or ground layer)
+            if ((1 << hit.collider.gameObject.layer & LayerMask.GetMask("Ground")) != 0) {
+                // Randomly choose a zombie type (e.g., fast, slow, normal)
+                int zombieType = UnityEngine.Random.Range(0, 3);
 
-        if (spawnedZombie != null) {
-            // Trigger the event for the spawned zombie
-            onZombieSpawned?.Invoke(spawnedZombie);
+                GameObject spawnedZombie = null;
+                switch (zombieType) {
+                    case 0:
+                        spawnedZombie = zombieManager.SpawnFastZombie(randomSpawnPoint);
+                        break;
+                    case 1:
+                        spawnedZombie = zombieManager.SpawnSlowZombie(randomSpawnPoint);
+                        break;
+                    case 2:
+                        spawnedZombie = zombieManager.SpawnNormalZombie(randomSpawnPoint);
+                        break;
+                }
+
+                if (spawnedZombie != null) {
+                    // Trigger the event for the spawned zombie
+                    onZombieSpawned?.Invoke(spawnedZombie);
+                }
+            }
         }
     }
+
 }

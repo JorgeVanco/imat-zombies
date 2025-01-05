@@ -4,46 +4,78 @@ using UnityEngine;
 
 public class Zombie : MonoBehaviour
 {
-
     private Animator animator;
-    [SerializeField] private float speed = 1.0f;
-    [SerializeField] private float damage = 10.0f;
-    [SerializeField] private float life = 100.0f;
+    private float speed = 1.0f;
+    private float damage = 10.0f;
+    private float life = 100.0f;
 
+    [Header("Ground Detection")]
+    public Transform GroundCheck;
+    public float GroundDistance = 0.2f;  // Detection radius for ground
+    public LayerMask GroundMask;
+    private bool isGrounded;
+
+    private Rigidbody rb;
     private GameObject target;
     private bool attacking;
 
-    void Start()
-    {
+    void Start() {
         animator = GetComponent<Animator>();
-        target = GameObject.Find("Player");
+        rb = GetComponent<Rigidbody>();
+
+        // Ensure Rigidbody is properly set up
+        rb.useGravity = false;  // We'll handle gravity manually
+        rb.constraints = RigidbodyConstraints.FreezeRotation;  // Prevent tipping
+
+        target = GameObject.Find("FPS");
     }
 
-    void Update()
-    {
+    void FixedUpdate() {
+        HandleGroundCheck();
+        ApplyGravity();
+    }
+
+    void Update() {
         ZombieBehaviour();
+    }
+
+    void HandleGroundCheck() {
+        // Perform ground check using Physics.CheckSphere
+        isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
+
+        if (isGrounded && rb.velocity.y < 0f) {
+            rb.velocity = new Vector3(rb.velocity.x, -2f, rb.velocity.z);  // Stick to the ground
+        }
+    }
+
+    void ApplyGravity() {
+        if (!isGrounded) {
+            rb.velocity += Vector3.up * Physics.gravity.y * Time.fixedDeltaTime;  // Apply gravity
+        }
     }
 
     void ZombieBehaviour() {
         if (Vector3.Distance(transform.position, target.transform.position) > 5) {
-            
             RotateTowardsTarget();
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            Move(speed);
             startWalk();
-
         }
         else {
             if (Vector3.Distance(transform.position, target.transform.position) > 1 && !attacking) {
                 RotateTowardsTarget();
-                transform.Translate(Vector3.forward * 2 * speed * Time.deltaTime);
+                Move(speed * 2);
                 startRun();
-
             }
             else {
                 startAttack();
                 attacking = true;
             }
         }
+    }
+
+    private void Move(float moveSpeed) {
+        Vector3 moveDirection = transform.forward * moveSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + moveDirection);
     }
 
     private void startWalk() {
@@ -57,11 +89,13 @@ public class Zombie : MonoBehaviour
         animator.SetBool("walk", false);
         animator.SetBool("attack", false);
     }
+
     private void startAttack() {
         animator.SetBool("attack", true);
         animator.SetBool("walk", false);
         animator.SetBool("run", false);
     }
+
     private void RotateTowardsTarget() {
         Vector3 lookPos = GetTargetDirection();
         RotateTowardsDirection(lookPos);
