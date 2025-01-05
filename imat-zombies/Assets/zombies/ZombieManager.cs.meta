@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d9ebf88342ccec446bc3ecde6160a947
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - fastZombiePrefab: {fileID: 2195477950290920328, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
+  - slowZombiePrefab: {fileID: 1793952591081353177, guid: ae3ac44a6b6b660419a79d6fc3976b87, type: 3}
+  - normalZombiePrefab: {fileID: 6861921296739099886, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
