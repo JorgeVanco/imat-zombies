@@ -10524,15 +10524,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebcbd9531720b0499019a1e408c4d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
   currentWeapon: {fileID: 1791301020}
   knife: {fileID: 1015941608}
   gun: {fileID: 1791301020}
   grenade: {fileID: 728864641}
-=======
   shootPoint: {fileID: 54887338}
   maxShootDistance: 1000
->>>>>>> Stashed changes
 --- !u!1001 &1506864563
 PrefabInstance:
   m_ObjectHideFlags: 0

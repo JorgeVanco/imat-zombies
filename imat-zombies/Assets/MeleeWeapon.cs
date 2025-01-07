@@ -7,12 +7,16 @@ public class MeleeWeapon : MonoBehaviour
     public float moveDistance = 0.5f;
     public float moveSpeed = 3f;
     private bool isMoving = false;
+    private float damage = 100f;
+    private Collider meleeCollider;
 
     private Vector3 weaponOffset;
 
     void Start()
     {
         weaponOffset = transform.position - player.position;
+        meleeCollider = GetComponent<Collider>();
+        meleeCollider.enabled = false;
     }
 
     void Update()
@@ -23,10 +27,25 @@ public class MeleeWeapon : MonoBehaviour
         }
     }
 
+
+    void OnTriggerEnter(Collider other) {
+        // Check if the object has a health component
+
+        Zombie zombie = other.GetComponent<Zombie>();
+        if (zombie != null) {
+
+            // Apply damage to the zombie
+            zombie.TakeDamage(damage);
+            Debug.Log($"Knife hit {other.name} for {damage} damage!");
+           
+            
+        }
+    }
+
     IEnumerator MoveWeapon()
     {
         isMoving = true;
-
+        meleeCollider.enabled = true;
         Vector3 initialPosition = transform.position;
 
         Vector3 targetPosition = initialPosition + player.forward * moveDistance;
@@ -53,7 +72,8 @@ public class MeleeWeapon : MonoBehaviour
 
         transform.position = player.position + weaponOffset;
 
-        isMoving = false; 
+        isMoving = false;
+        meleeCollider.enabled = false;
     }
 }
     
