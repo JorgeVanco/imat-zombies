@@ -17,6 +17,12 @@ public class Zombie : MonoBehaviour
     public LayerMask GroundMask;
     private bool isGrounded;
 
+    [Header("Movement Physics")]
+    private float fallVelocity = 0f;  // Track vertical velocity separately
+    private readonly float gravityStrength = -20f;  // Stronger than default Unity gravity
+    private readonly float groundedGravity = 0f;   // Small downward force when grounded
+    private readonly float terminalVelocity = -50f; // Maximum fall speed
+
     private Rigidbody rb;
     private GameObject target;
     private bool attacking;
@@ -24,42 +30,48 @@ public class Zombie : MonoBehaviour
     public event Action OnDeath;
 
     void Start() {
-
         currentLife = maxLife;
-
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
-        // Ensure Rigidbody is properly set up
-        rb.useGravity = false;  // We'll handle gravity manually
-        rb.constraints = RigidbodyConstraints.FreezeRotation;  // Prevent tipping
+        // Keep using custom gravity but maintain other physics
+        rb.useGravity = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         target = GameObject.Find("FPS");
     }
 
-    void FixedUpdate() {
-        HandleGroundCheck();
-        ApplyGravity();
-    }
 
     void Update() {
         ZombieBehaviour();
     }
+    void FixedUpdate() {
+        HandleGroundCheck();
+        ApplyImprovedGravity();
+    }
 
     void HandleGroundCheck() {
-        // Perform ground check using Physics.CheckSphere
+        // Check if the zombie is grounded
         isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
-
-        if (isGrounded && rb.velocity.y < 0f) {
-            rb.velocity = new Vector3(rb.velocity.x, -2f, rb.velocity.z);  // Stick to the ground
-        }
     }
 
-    void ApplyGravity() {
-        if (!isGrounded) {
-            rb.velocity += Vector3.up * Physics.gravity.y * Time.fixedDeltaTime;  // Apply gravity
+    void ApplyImprovedGravity() {
+        if (isGrounded) {
+            // When grounded, apply a small constant force to keep the zombie stuck to the ground
+            fallVelocity = groundedGravity;
         }
+        else {
+            // When in air, accelerate downward but don't exceed terminal velocity
+            fallVelocity += gravityStrength * Time.fixedDeltaTime;
+            fallVelocity = Mathf.Max(fallVelocity, terminalVelocity);
+        }
+
+        // Apply the vertical velocity
+        Vector3 currentVelocity = rb.velocity;
+        currentVelocity.y = fallVelocity;
+        rb.velocity = currentVelocity;
     }
+
     // Function to apply damage
     public void TakeDamage(float damage) {
         currentLife -= damage;
@@ -94,6 +106,13 @@ public class Zombie : MonoBehaviour
             }
         }
     }
+    void OnTriggerEnter(Collider other) {
+        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        if (playerHealth != null) {
+            playerHealth.TakeDamage(damage);
+        }
+    }
+
 
     private void Move(float moveSpeed) {
         Vector3 moveDirection = transform.forward * moveSpeed * Time.deltaTime;

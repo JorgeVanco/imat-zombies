@@ -29,8 +29,5 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealth(newHealth);
     }
 
-    void OnTriggerEnter(Collider other) {
-        TakeDamage(5.0f);
-    }
 }
 

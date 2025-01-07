@@ -3,7 +3,8 @@ using UnityEngine;
 public class FireWeapon : MonoBehaviour
 {
     public Transform shootPoint;  // Point where bullets are spawned
-    public float bulletSpeed = 1000f; // Bullet speed
+    private float bulletSpeed = 30.0f; // Bullet speed
+    public float maxShootDistance = 1000f;
     private float damage;
     private Camera playerCamera;      // Reference to the player's camera
 
@@ -21,21 +22,33 @@ public class FireWeapon : MonoBehaviour
     }
 
     void Shoot() {
-        // Get a bullet from the pool
-        Bullet bullet = BulletPool.Instance.GetBullet();
+        Vector3 aimDirection = GetPreciseAimDirection();
 
-        // Set bullet's position and direction
-        bullet.transform.position = shootPoint.position;
-        bullet.transform.rotation = shootPoint.rotation;
-
-        Vector3 shootDirection = GetShootDirection();
-
-        // Initialize the bullet with its direction and speed
-        bullet.Initialize(shootDirection, bulletSpeed, damage);
-
+        // Only shoot if we have a valid direction
+        if (aimDirection != Vector3.zero) {
+            Bullet bullet = BulletPool.Instance.GetBullet();
+            bullet.transform.position = shootPoint.position;
+            bullet.transform.rotation = Quaternion.LookRotation(aimDirection);
+            bullet.Initialize(aimDirection, bulletSpeed, damage);
+        }
     }
 
-    private Vector3 GetShootDirection() {
-        return playerCamera.transform.forward;
+    private Vector3 GetPreciseAimDirection() {
+        // Calculate screen center
+        Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        Ray ray = playerCamera.ScreenPointToRay(screenCenter);
+
+        // Get the exact point we're aiming at
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out RaycastHit hit, maxShootDistance)) {
+            targetPoint = hit.point;
+        }
+        else {
+            targetPoint = ray.GetPoint(maxShootDistance);
+        }
+
+        // Calculate precise direction from gun to target
+        Vector3 direction = (targetPoint - shootPoint.position).normalized;
+        return direction;
     }
 }

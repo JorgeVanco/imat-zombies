@@ -27,13 +27,6 @@ public class ZombieSpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnZombies() {
-        while (isSpawning) {
-            SpawnRandomZombie();
-            yield return new WaitForSeconds(spawnInterval);
-        }
-    }
-
     private void SpawnRandomZombie() {
         // Generate a random spawn point within the defined limits (on the X-Z plane)
         Vector3 randomSpawnPoint = new Vector3(
@@ -46,7 +39,7 @@ public class ZombieSpawner : MonoBehaviour
         Ray ray = new Ray(randomSpawnPoint, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) {
             // Adjust the spawn point to be at the terrain's surface
-            randomSpawnPoint.y = hit.point.y;
+            randomSpawnPoint.y = hit.point.y + 2;
 
             // Check if the hit surface is valid (e.g., terrain or ground layer)
             if ((1 << hit.collider.gameObject.layer & LayerMask.GetMask("Ground")) != 0) {
