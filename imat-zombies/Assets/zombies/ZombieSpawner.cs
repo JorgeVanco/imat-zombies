@@ -7,18 +7,24 @@ public class ZombieSpawner : MonoBehaviour
     [SerializeField] private ZombieManager zombieManager; // Reference to ZombieManager
     [SerializeField] private Vector2 xSpawnLimits;
     [SerializeField] private Vector2 zSpawnLimits;
-    [SerializeField] private bool isSpawning = true;
-    [SerializeField] private float spawnInterval = 1f;
+    [SerializeField] private readonly bool isSpawning = true;
+    [SerializeField] private readonly float spawnInterval = 1f;
 
-    public event Action<GameObject> onZombieSpawned;
+    private Action onZombieKilled;
+
+    public void StartSpawning(int zombieCount, Action onZombieKilledCallback) {
+        onZombieKilled = onZombieKilledCallback;
+
+        for (int i = 0; i < zombieCount; i++) {
+            SpawnRandomZombie();
+        }
+    }
 
     private void Start() {
         if (zombieManager == null) {
             Debug.LogError("ZombieManager is not assigned in the Inspector!");
             return;
         }
-
-        StartCoroutine(SpawnZombies());
     }
 
     private IEnumerator SpawnZombies() {
@@ -59,11 +65,11 @@ public class ZombieSpawner : MonoBehaviour
                         spawnedZombie = zombieManager.SpawnNormalZombie(randomSpawnPoint);
                         break;
                 }
-
                 if (spawnedZombie != null) {
-                    // Trigger the event for the spawned zombie
-                    onZombieSpawned?.Invoke(spawnedZombie);
+                    Zombie zombie = spawnedZombie.GetComponent<Zombie>();
+                    zombie.OnDeath += onZombieKilled;
                 }
+
             }
         }
     }

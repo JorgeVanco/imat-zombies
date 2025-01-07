@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlowZombie
       objectReference: {fileID: 0}
+    - target: {fileID: 2195477950290920328, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 5415244010108952677, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -79,9 +83,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69de41559555ae949831872c5fb77b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.8
-  damage: 15
-  life: 120
   GroundCheck: {fileID: 4793211170202516346}
   GroundDistance: 0.2
   GroundMask:

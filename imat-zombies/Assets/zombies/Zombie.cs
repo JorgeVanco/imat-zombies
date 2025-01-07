@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Zombie : MonoBehaviour
 {
     private Animator animator;
-    private float speed = 1.0f;
-    private float damage = 10.0f;
-    private float life = 100.0f;
+    protected float speed = 1.0f;
+    protected float damage = 10.0f;
+    protected float maxLife = 100f;
+    private float currentLife = 100.0f;
 
     [Header("Ground Detection")]
     public Transform GroundCheck;
@@ -19,7 +21,12 @@ public class Zombie : MonoBehaviour
     private GameObject target;
     private bool attacking;
 
+    public event Action OnDeath;
+
     void Start() {
+
+        currentLife = maxLife;
+
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
@@ -53,7 +60,22 @@ public class Zombie : MonoBehaviour
             rb.velocity += Vector3.up * Physics.gravity.y * Time.fixedDeltaTime;  // Apply gravity
         }
     }
+    // Function to apply damage
+    public void TakeDamage(float damage) {
+        currentLife -= damage;
+        Debug.Log($"Zombie took {damage} damage. Current life: {currentLife}");
 
+        if (currentLife <= 0f) {
+            Die();
+        }
+    }
+
+    private void Die() {
+        // Notify listeners (e.g., RoundManager, ZombieSpawner)
+        OnDeath?.Invoke();
+
+        Destroy(gameObject);
+    }
     void ZombieBehaviour() {
         if (Vector3.Distance(transform.position, target.transform.position) > 5) {
             RotateTowardsTarget();

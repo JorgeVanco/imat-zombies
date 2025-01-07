@@ -1719,7 +1719,7 @@ GameObject:
   - component: {fileID: 4440318934331869666}
   m_Layer: 0
   m_Name: BaseZombie
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1775,9 +1775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e674954d418c8c4ab173e8487c434f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  damage: 10
-  life: 100
   GroundCheck: {fileID: 386182953518182477}
   GroundDistance: 0.2
   GroundMask:

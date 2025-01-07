@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5540969213254632019}
   - component: {fileID: 7761004022364687817}
   - component: {fileID: 738517885768256660}
+  - component: {fileID: 5844512799348000337}
   - component: {fileID: 9189320550236724966}
   - component: {fileID: 267455187041698845}
   m_Layer: 0
@@ -85,6 +86,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5844512799348000337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4907104788827500056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2dd19914efb5348ad45b13ccab7caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &9189320550236724966
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -114,7 +127,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4907104788827500056}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -128,7 +141,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
