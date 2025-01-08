@@ -10,8 +10,11 @@ EditorBuildSettings:
     guid: 3857e3f60dcbd6843832b8421abd847d
   - enabled: 1
     path: Assets/Scenes/Juego.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: b7b4d2c757734c042acb8c5bd3455f2d
   - enabled: 1
     path: Assets/Scenes/Dificultad.unity
     guid: af2e0cb92b8a38649ae5475bfd53b8a1
+  - enabled: 1
+    path: Assets/Scenes/GameOverMenu.unity
+    guid: e0901ba6e119a3a4da9973825f6405ad
   m_configObjects: {}
