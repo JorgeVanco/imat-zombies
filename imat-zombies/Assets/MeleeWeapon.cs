@@ -36,7 +36,6 @@ public class MeleeWeapon : MonoBehaviour
 
             // Apply damage to the zombie
             zombie.TakeDamage(damage);
-            Debug.Log($"Knife hit {other.name} for {damage} damage!");
            
             
         }

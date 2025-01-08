@@ -5,9 +5,16 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f; // Maximum health of the player
     private float currentHealth; // Current health of the player
-    [SerializeField] private UIManager uiManager;
+    private RoundManager roundManager;
+    private UIManager uiManager;
+    private GameManager gameManager;
     private void Start() {
         // Set current health to max health at the start
+        gameManager = GameManager.GetInstance();
+        roundManager = gameManager.GetRoundManager();
+        uiManager = gameManager.GetUIManager();
+
+        roundManager.OnRoundEnded += HealEndOfRound;
         UpdateHealth(maxHealth);
     }
 
@@ -27,6 +34,11 @@ public class PlayerHealth : MonoBehaviour
     public void Heal(float healAmount) {
         float newHealth = currentHealth + healAmount;
         UpdateHealth(newHealth);
+    }
+
+    public void HealEndOfRound(int currentRound) {
+        float healAmount = Mathf.Max(5f*currentRound, 50f);
+        Heal(healAmount);
     }
 
 }

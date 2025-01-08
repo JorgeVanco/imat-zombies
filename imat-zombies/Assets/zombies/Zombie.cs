@@ -75,7 +75,6 @@ public class Zombie : MonoBehaviour
     // Function to apply damage
     public void TakeDamage(float damage) {
         currentLife -= damage;
-        Debug.Log($"Zombie took {damage} damage. Current life: {currentLife}");
 
         if (currentLife <= 0f) {
             Die();

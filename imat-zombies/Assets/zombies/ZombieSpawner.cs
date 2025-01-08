@@ -39,7 +39,7 @@ public class ZombieSpawner : MonoBehaviour
         Ray ray = new Ray(randomSpawnPoint, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) {
             // Adjust the spawn point to be at the terrain's surface
-            randomSpawnPoint.y = hit.point.y + 2;
+            randomSpawnPoint.y = hit.point.y + 5; // So that the don't keep appearing under the map
 
             // Check if the hit surface is valid (e.g., terrain or ground layer)
             if ((1 << hit.collider.gameObject.layer & LayerMask.GetMask("Ground")) != 0) {
