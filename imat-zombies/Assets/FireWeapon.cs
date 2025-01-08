@@ -8,15 +8,53 @@ public class FireWeapon : MonoBehaviour
     private float damage;
     private Camera playerCamera;      // Reference to the player's camera
 
+    private GameManager gameManager;
+    private DataManager dataManager;
 
+    [Header("Ammo Settings")]
+    public int maxAmmo = 30;         // Maximum ammo in magazine
+    private int currentAmmo;         // Current ammo in magazine
+    public float reloadTime = 2.0f;  // Time it takes to reload
+    private bool isReloading = false;
+    private float reloadTimer = 0f;
+
+    public int GetCurrentAmmo() => currentAmmo;
+    public bool IsReloading() => isReloading;
+    public float GetReloadProgress() => isReloading ? reloadTimer / reloadTime : 0f;
     public void Start() {
+
+        gameManager = GameManager.GetInstance();
+        dataManager = gameManager.GetDataManager();
+
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
         damage = 25;
+        currentAmmo = maxAmmo;       // Start with a full magazine
 
     }
     void Update() {
-        if (Input.GetButtonDown("Fire1")) // Trigger shooting
-        {
+        // Handle reloading
+        if (isReloading) {
+            reloadTimer += Time.deltaTime;
+            if (reloadTimer >= reloadTime) {
+                FinishReload();
+            }
+            return; // Don't allow shooting while reloading
+        }
+
+        // Manual reload when pressing R
+        if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo && dataManager.TotalAmmo > 0) {
+            StartReload();
+            return;
+        }
+
+        // Auto reload when empty and trying to shoot
+        if (Input.GetButtonDown("Fire1") && currentAmmo <= 0 && dataManager.TotalAmmo > 0) {
+            StartReload();
+            return;
+        }
+
+        // Regular shooting
+        if (Input.GetButtonDown("Fire1") && currentAmmo > 0) {
             Shoot();
         }
     }
@@ -31,8 +69,28 @@ public class FireWeapon : MonoBehaviour
             bullet.transform.rotation = Quaternion.LookRotation(aimDirection);
             bullet.Initialize(aimDirection, bulletSpeed, damage);
         }
+
+        currentAmmo--;
     }
 
+    private void StartReload() {
+        if (!isReloading && dataManager.TotalAmmo > 0) {
+            isReloading = true;
+            reloadTimer = 0f;
+            // You might want to play reload animation here
+        }
+    }
+
+    private void FinishReload() {
+        int ammoNeeded = maxAmmo - currentAmmo;
+        int ammoToAdd = Mathf.Min(ammoNeeded, dataManager.TotalAmmo);
+
+        currentAmmo += ammoToAdd;
+        dataManager.TotalAmmo -= ammoToAdd;
+
+        isReloading = false;
+        reloadTimer = 0f;
+    }
     private Vector3 GetPreciseAimDirection() {
         // Calculate screen center
         Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);

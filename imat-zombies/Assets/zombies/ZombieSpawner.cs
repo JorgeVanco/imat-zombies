@@ -7,8 +7,6 @@ public class ZombieSpawner : MonoBehaviour
     [SerializeField] private ZombieManager zombieManager; // Reference to ZombieManager
     [SerializeField] private Vector2 xSpawnLimits;
     [SerializeField] private Vector2 zSpawnLimits;
-    [SerializeField] private readonly bool isSpawning = true;
-    [SerializeField] private readonly float spawnInterval = 1f;
 
     private Action onZombieKilled;
 

@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other) {
-        Debug.Log("COLLIDE");
+        
         if (other.CompareTag("ZombieArm")) {
             Debug.Log("DAÑO");
         }

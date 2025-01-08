@@ -7,6 +7,7 @@ public class DataManager : MonoBehaviour
     private int lifes = 5;
     private int money = 0;
     private int score = 0;
+    public int TotalAmmo = 90;
     
     private int roundMultiplier = 1;
     private GameManager gameManager;
@@ -20,6 +21,7 @@ public class DataManager : MonoBehaviour
         ResetMoney();
 
     }
+
 
     public void AddToScore(int scoreVal) {
         SetScore(score + scoreVal);
