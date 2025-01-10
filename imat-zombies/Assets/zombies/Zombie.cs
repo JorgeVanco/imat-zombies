@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Zombie : MonoBehaviour
+public class Zombie : MonoBehaviour, IDamageable
 {
     private Animator animator;
     protected float speed = 1.0f;
@@ -72,9 +72,8 @@ public class Zombie : MonoBehaviour
         rb.velocity = currentVelocity;
     }
 
-    // Function to apply damage
-    public void TakeDamage(float damage) {
-        currentLife -= damage;
+    public void TakeDamage(float damageAmount) {
+        currentLife -= damageAmount;
 
         if (currentLife <= 0f) {
             Die();

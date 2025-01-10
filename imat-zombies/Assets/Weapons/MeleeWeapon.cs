@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MeleeWeapon : MonoBehaviour
+public class MeleeWeapon : MonoBehaviour, IUsable
 {
     public Transform player;  
     public float moveDistance = 0.5f;
@@ -19,10 +19,8 @@ public class MeleeWeapon : MonoBehaviour
         meleeCollider.enabled = false;
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && !isMoving)
-        {
+    public void Use() {
+        if (!isMoving) {
             StartCoroutine(MoveWeapon());
         }
     }

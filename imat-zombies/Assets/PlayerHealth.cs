@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private float maxHealth = 100f; // Maximum health of the player
     private float currentHealth; // Current health of the player
@@ -34,11 +34,11 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        // Cargar la escena del menú de Game Over
+        // Cargar la escena del menï¿½ de Game Over
         SceneManager.LoadScene("GameOverMenu");
     }
 
-    // Call this method to take damage
+
     public void TakeDamage(float damageAmount)
     {
         float newHealth = currentHealth - damageAmount;

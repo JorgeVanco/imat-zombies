@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FireWeapon : MonoBehaviour
+public class FireWeapon : MonoBehaviour, IUsable
 {
     public Transform shootPoint;  // Point where bullets are spawned
     private float bulletSpeed = 30.0f; // Bullet speed
@@ -38,25 +38,29 @@ public class FireWeapon : MonoBehaviour
             if (reloadTimer >= reloadTime) {
                 FinishReload();
             }
-            return; // Don't allow shooting while reloading
         }
 
         // Manual reload when pressing R
         if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo && dataManager.TotalAmmo > 0) {
             StartReload();
-            return;
         }
 
-        // Auto reload when empty and trying to shoot
-        if (Input.GetButtonDown("Fire1") && currentAmmo <= 0 && dataManager.TotalAmmo > 0) {
-            StartReload();
-            return;
-        }
 
+    }
+
+    public void Use() {
+        if (isReloading) {
+            return; // Can't shoot if it is reloading
+        }
         // Regular shooting
-        if (Input.GetButtonDown("Fire1") && currentAmmo > 0) {
+        if (currentAmmo > 0) {
             Shoot();
         }
+        // Auto reload when empty and trying to shoot
+        else if (currentAmmo <= 0 && dataManager.TotalAmmo > 0) {
+            StartReload();
+        }
+
     }
 
     void Shoot() {
