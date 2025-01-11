@@ -29,6 +29,12 @@ This project is the final assignment for the course **Programming Paradigms and 
 
 ---
 
+## **Gameplay Video**
+
+![Gameplay Video](video_ImatZombies.mp4)
+
+---
+
 ## **🔥 Features**
 
 - 🧟 **Zombie Waves**: Each round introduces more zombies and increases difficulty.  
