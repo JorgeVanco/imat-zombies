@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4343020610826642118, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6861921296739099886, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
       propertyPath: m_Name
       value: FastZombie

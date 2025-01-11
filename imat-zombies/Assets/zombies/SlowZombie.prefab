@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2592966475884378089, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2592966475884378089, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
       propertyPath: m_IsKinematic
@@ -66,6 +66,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8994453767253634692, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
       propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009473853501261216, guid: ca28a18ad2db01747a8d8b6245fba69f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
