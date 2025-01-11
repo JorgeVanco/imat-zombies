@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadeWeapon : MonoBehaviour, IUsable, IThrowable
+public class GrenadeWeapon : Weapon, IUsable, IThrowable
 {
     public GameObject explosionPrefab;  // Prefab de la explosi�n
     public GameObject grenadePrefab;
     public Transform grenadePosition;   // Posici�n donde se generar� la explosi�n
     private float explosionRadius = 10f; // Explosion radius
-    private float explosionDamage = 150f; // Base damage of the grenade
     public void Use() {
         Throw();
     }
 
-    public void Initialize(GameObject explosionPrefab, float radius, float damage) {
+    void Start() {
+        damage = 150f; // Base damage of the grenade
+    }
+
+    public void Initialize(GameObject explosionPrefab, float radius, float explosionDamage) {
         this.explosionPrefab = explosionPrefab;
         explosionRadius = radius;
-        explosionDamage = damage;
+        damage = explosionDamage;
     }
 
     public void Throw() {
@@ -32,7 +35,7 @@ public class GrenadeWeapon : MonoBehaviour, IUsable, IThrowable
         // the inventory, it stops because that granade is SetActive(false) when it is removed from the inventory.
         GrenadeWeapon grenadeWeapon = grenade.GetComponent<GrenadeWeapon>();
         Debug.Log(grenadeWeapon);
-        grenadeWeapon.Initialize(explosionPrefab, explosionRadius, explosionDamage);
+        grenadeWeapon.Initialize(explosionPrefab, explosionRadius, damage);
         grenadeWeapon.StartExplosionCoroutine(grenade);
     }
 
@@ -62,10 +65,10 @@ public class GrenadeWeapon : MonoBehaviour, IUsable, IThrowable
             if (damageable != null) {
                 // Calculate damage based on distance
                 float distance = Vector3.Distance(explosionPosition, collider.transform.position);
-                float damage = Mathf.Max(0, explosionDamage * (1 - distance / explosionRadius));
+                float explosionDamage = Mathf.Max(0, damage * (1 - distance / explosionRadius));
 
                 // Apply damage
-                damageable.TakeDamage(damage);
+                damageable.TakeDamage(explosionDamage);
             }
 
         }

@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
-        // Add logic for hitting targets
+
         if (collision.gameObject.CompareTag("Zombie")) {
             collision.gameObject.GetComponent<Zombie>()?.TakeDamage(damage);
         }

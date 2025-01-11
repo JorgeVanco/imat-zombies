@@ -2,11 +2,10 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class ZombieSpawner : MonoBehaviour
+public class ZombieSpawner : Spawner
 {
     [SerializeField] private ZombieManager zombieManager; // Reference to ZombieManager
-    [SerializeField] private Vector2 xSpawnLimits;
-    [SerializeField] private Vector2 zSpawnLimits;
+
 
     private Action onZombieKilled;
 
@@ -14,7 +13,7 @@ public class ZombieSpawner : MonoBehaviour
         onZombieKilled = onZombieKilledCallback;
 
         for (int i = 0; i < zombieCount; i++) {
-            SpawnRandomZombie();
+            Spawn();
         }
     }
 
@@ -25,43 +24,25 @@ public class ZombieSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnRandomZombie() {
-        // Generate a random spawn point within the defined limits (on the X-Z plane)
-        Vector3 randomSpawnPoint = new Vector3(
-            UnityEngine.Random.Range(xSpawnLimits.x, xSpawnLimits.y),
-            50f, // Start the ray high above the terrain to ensure it hits
-            UnityEngine.Random.Range(zSpawnLimits.x, zSpawnLimits.y)
-        );
+    public override void SpawningFunction(Vector3 randomSpawnPoint) {
+        // Randomly choose a zombie type
+        int zombieType = UnityEngine.Random.Range(0, 3);
 
-        // Raycast to find the ground
-        Ray ray = new Ray(randomSpawnPoint, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) {
-            // Adjust the spawn point to be at the terrain's surface
-            randomSpawnPoint.y = hit.point.y + 5; // So that the don't keep appearing under the map
-
-            // Check if the hit surface is valid (e.g., terrain or ground layer)
-            if ((1 << hit.collider.gameObject.layer & LayerMask.GetMask("Ground")) != 0) {
-                // Randomly choose a zombie type (e.g., fast, slow, normal)
-                int zombieType = UnityEngine.Random.Range(0, 3);
-
-                GameObject spawnedZombie = null;
-                switch (zombieType) {
-                    case 0:
-                        spawnedZombie = zombieManager.SpawnFastZombie(randomSpawnPoint);
-                        break;
-                    case 1:
-                        spawnedZombie = zombieManager.SpawnSlowZombie(randomSpawnPoint);
-                        break;
-                    case 2:
-                        spawnedZombie = zombieManager.SpawnNormalZombie(randomSpawnPoint);
-                        break;
-                }
-                if (spawnedZombie != null) {
-                    Zombie zombie = spawnedZombie.GetComponent<Zombie>();
-                    zombie.OnDeath += onZombieKilled;
-                }
-
-            }
+        GameObject spawnedZombie = null;
+        switch (zombieType) {
+            case 0:
+                spawnedZombie = zombieManager.SpawnFastZombie(randomSpawnPoint);
+                break;
+            case 1:
+                spawnedZombie = zombieManager.SpawnSlowZombie(randomSpawnPoint);
+                break;
+            case 2:
+                spawnedZombie = zombieManager.SpawnNormalZombie(randomSpawnPoint);
+                break;
+        }
+        if (spawnedZombie != null) {
+            Zombie zombie = spawnedZombie.GetComponent<Zombie>();
+            zombie.OnDeath += onZombieKilled;
         }
     }
 

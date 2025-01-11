@@ -11,25 +11,13 @@ public class Zombie : MonoBehaviour, IDamageable
     protected float maxLife = 100f;
     private float currentLife = 100.0f;
 
-    [Header("Ground Detection")]
-    public Transform GroundCheck;
-    public float GroundDistance = 0.2f;  // Detection radius for ground
-    public LayerMask GroundMask;
-    private bool isGrounded;
-
-    [Header("Movement Physics")]
-    private float fallVelocity = 0f;  // Track vertical velocity separately
-    private readonly float gravityStrength = -20f;  // Stronger than default Unity gravity
-    private readonly float groundedGravity = 0f;   // Small downward force when grounded
-    private readonly float terminalVelocity = -50f; // Maximum fall speed
-
     private Rigidbody rb;
     private GameObject target;
     private bool attacking;
 
     public event Action OnDeath;
 
-    void Start() {
+    public void Start() {
         currentLife = maxLife;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -43,27 +31,6 @@ public class Zombie : MonoBehaviour, IDamageable
         ZombieBehaviour();
     }
 
-    void HandleGroundCheck() {
-        // Check if the zombie is grounded
-        isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
-    }
-
-    void ApplyImprovedGravity() {
-        if (isGrounded) {
-            // When grounded, apply a small constant force to keep the zombie stuck to the ground
-            fallVelocity = groundedGravity;
-        }
-        else {
-            // When in air, accelerate downward but don't exceed terminal velocity
-            fallVelocity += gravityStrength * Time.fixedDeltaTime;
-            fallVelocity = Mathf.Max(fallVelocity, terminalVelocity);
-        }
-
-        // Apply the vertical velocity
-        Vector3 currentVelocity = rb.velocity;
-        currentVelocity.y = fallVelocity;
-        rb.velocity = currentVelocity;
-    }
 
     public void TakeDamage(float damageAmount) {
         currentLife -= damageAmount;
@@ -74,7 +41,6 @@ public class Zombie : MonoBehaviour, IDamageable
     }
 
     private void Die() {
-        // Notify listeners (e.g., RoundManager, ZombieSpawner)
         OnDeath?.Invoke();
 
         Destroy(gameObject);

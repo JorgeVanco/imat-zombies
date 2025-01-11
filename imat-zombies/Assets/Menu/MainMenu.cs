@@ -7,12 +7,10 @@ public class MainMenu : MonoBehaviour
 {
     public void LoadGameScene()
     {
+        // Can't access MenuManager from here
+        CursorLocker.LockCursor();
         SceneManager.LoadScene("Juego");
-    }
-
-    public void LoadDifficultyScene()
-    {
-        SceneManager.LoadScene("Dificultad");
+        Time.timeScale = 1f;
     }
 
     public void Salir()

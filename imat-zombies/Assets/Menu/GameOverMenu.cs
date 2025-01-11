@@ -4,8 +4,7 @@ public class GameOverMenu : MonoBehaviour
 {
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.None; 
-        Cursor.visible = true;
+        CursorLocker.UnLockCursor();
     }
 
     public void LoadMainMenu()

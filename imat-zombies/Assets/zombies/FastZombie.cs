@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class FastZombie : Zombie
 {
-    private readonly float speed = 1.5f;
-    private readonly float damage = 7.0f;
-    private readonly float maxLife = 80.0f;
+    public void Start(){
+        speed = 1.5f;
+        damage = 7.0f;
+        maxLife = 80.0f;
+        base.Start();
+    }
     
 }

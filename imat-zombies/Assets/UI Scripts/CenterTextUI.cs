@@ -28,7 +28,6 @@ public class CenterTextUI : MonoBehaviour
             yield return null;
         }
 
-        // Ensure the text is fully invisible
         textElement.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
     }
 }

@@ -1,13 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class MeleeWeapon : MonoBehaviour, IUsable
+public class MeleeWeapon : Weapon, IUsable
 {
     public Transform player;  
     public float moveDistance = 0.5f;
     public float moveSpeed = 3f;
     private bool isMoving = false;
-    private float damage = 100f;
     private Collider meleeCollider;
 
     private Vector3 weaponOffset;
@@ -17,6 +16,7 @@ public class MeleeWeapon : MonoBehaviour, IUsable
         weaponOffset = transform.position - player.position;
         meleeCollider = GetComponent<Collider>();
         meleeCollider.enabled = false;
+        damage = 100f;
     }
 
     public void Use() {

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class SlowZombie : Zombie
 {
-    private readonly float speed = 0.7f;
-    private readonly float damage = 15f;
-    private readonly float maxLife = 120f;
+    public void Start(){
+        speed = 0.7f;
+        damage = 15f;
+        maxLife = 120f;
+        base.Start();
+    }
 }

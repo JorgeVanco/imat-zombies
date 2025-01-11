@@ -25,7 +25,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         currentHealth = health;
         uiManager.UpdateHealthBar(currentHealth / maxHealth);
 
-        // Check if health has reached 0
+
         if (currentHealth <= 0)
         {
             Die();
@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private void Die()
     {
         // Cargar la escena del men� de Game Over
-        SceneManager.LoadScene("GameOverMenu");
+        gameManager.GetMenuManager().ChangeToScene("GameOverMenu");
     }
 
 

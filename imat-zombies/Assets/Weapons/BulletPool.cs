@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class BulletPool : MonoBehaviour
 {
-    public static BulletPool Instance; // Singleton instance
+    public static BulletPool Instance; 
 
-    [SerializeField] private GameObject bulletPrefab; // Bullet prefab to use
-    [SerializeField] private int poolSize = 20; // Initial pool size
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private int poolSize = 30; // The gun has a 30 bullet magazine
 
     private readonly Queue<Bullet> bulletPool = new Queue<Bullet>();
 
     private void Awake() {
-        // Singleton pattern
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance == null) {
+            Instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
 
-        // Preload bullets into the pool
+
         for (int i = 0; i < poolSize; i++) {
             AddBulletToPool();
         }
@@ -31,7 +34,9 @@ public class BulletPool : MonoBehaviour
 
     public Bullet GetBullet() {
         // If no bullets are available, add more to the pool
-        if (bulletPool.Count == 0) AddBulletToPool();
+        if (bulletPool.Count == 0) {
+            AddBulletToPool();
+        }
 
         Bullet bullet = bulletPool.Dequeue();
         bullet.gameObject.SetActive(true);

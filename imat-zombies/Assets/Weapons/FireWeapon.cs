@@ -1,12 +1,11 @@
 using UnityEngine;
 
-public class FireWeapon : MonoBehaviour, IUsable
+public class FireWeapon : Weapon, IUsable
 {
     public Transform shootPoint;  // Point where bullets are spawned
     private float bulletSpeed = 30.0f; // Bullet speed
     public float maxShootDistance = 1000f;
-    private float damage;
-    private Camera playerCamera;      // Reference to the player's camera
+    private Camera playerCamera;      // Player's camera
 
     private GameManager gameManager;
     private DataManager dataManager;
@@ -28,7 +27,7 @@ public class FireWeapon : MonoBehaviour, IUsable
 
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
         damage = 25;
-        currentAmmo = maxAmmo;       // Start with a full magazine
+        currentAmmo = maxAmmo; // Start with a full magazine
 
     }
     void Update() {
@@ -81,7 +80,6 @@ public class FireWeapon : MonoBehaviour, IUsable
         if (!isReloading && dataManager.TotalAmmo > 0) {
             isReloading = true;
             reloadTimer = 0f;
-            // You might want to play reload animation here
         }
     }
 

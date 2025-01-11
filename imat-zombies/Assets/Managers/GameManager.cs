@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManager;
     [SerializeField] private DataManager dataManager;
     [SerializeField] private WeaponManager weaponManager;
+    [SerializeField] private MenuManager menuManager;
 
     public static GameManager GetInstance() { 
         if (instance == null) {
@@ -57,6 +58,10 @@ public class GameManager : MonoBehaviour
         return weaponManager;
     }
 
+    public MenuManager GetMenuManager() {
+        return menuManager;
+    }
+
     public void AddMoneyUI(MoneyUI moneyUI) {
         if (!uiManager.moneyUI.Contains(moneyUI)) {
             uiManager.moneyUI.Add(moneyUI);
@@ -69,6 +74,6 @@ public class GameManager : MonoBehaviour
 
     private void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        menuManager.ChangeToScene("MainMenu");
     }
 }

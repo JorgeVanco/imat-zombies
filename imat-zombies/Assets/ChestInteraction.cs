@@ -47,7 +47,7 @@ public class ChestInteraction : MonoBehaviour
     public void OpenBuyingMenu()
     {
         Time.timeScale = 0f;
-        SceneManager.LoadScene(buyingMenuSceneName, LoadSceneMode.Additive);
+        GameManager.GetInstance().GetMenuManager().ChangeToScene(buyingMenuSceneName, additive: true);
         
     }
     
