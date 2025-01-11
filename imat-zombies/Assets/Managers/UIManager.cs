@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     public RoundUI roundUI;
     public CenterTextUI centerTextUI;
     public HealthBarUI healthBarUI;
-    public MoneyUI moneyUI;
+    public List<MoneyUI> moneyUI;
     public ScoreUI scoreUI;
 
     [SerializeField] private RoundManager roundManager;
@@ -58,6 +58,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void UpdateMoney(int value) {
-        moneyUI.UpdateMoneyText(value); 
+        moneyUI.ForEach(moneyUi => moneyUi.UpdateMoneyText(value)); 
     }
+
 }

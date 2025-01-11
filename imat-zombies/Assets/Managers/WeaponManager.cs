@@ -10,6 +10,8 @@ public class WeaponManager : MonoBehaviour
     public GameObject gun;            // El arma de fuego (pistola)
     public GameObject grenade;        // La granada que se usar� cuando se presione "C"
 
+    private Dictionary<string, GameObject> availableWeapons = new Dictionary<string, GameObject>();
+
     private int currentWeaponIdx;
     private List<GameObject> inventory = new List<GameObject>();
 
@@ -19,6 +21,10 @@ public class WeaponManager : MonoBehaviour
         inventory.Add(knife);
         currentWeaponIdx = 0;
         SetCurrentWeapon();
+
+        availableWeapons["knife"]= knife;
+        availableWeapons["gun"] = gun;
+        availableWeapons["grenade"] = grenade;
     }
 
     void Update()
@@ -33,6 +39,17 @@ public class WeaponManager : MonoBehaviour
             if (currentWeapon.GetComponent<IThrowable>() != null) {
                 RemoveFromInventory(currentWeaponIdx);
             }
+        }
+    }
+
+    private GameObject GetPrefabByName(string name){
+        return availableWeapons.GetValueOrDefault(name);
+
+    }
+    public void AddWeaponToInventory(string name){
+        GameObject weaponObject = GetPrefabByName(name);
+        if (weaponObject != null) {
+            inventory.Add(weaponObject);
         }
     }
 

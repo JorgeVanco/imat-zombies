@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RoundManager roundManager;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private DataManager dataManager;
+    [SerializeField] private WeaponManager weaponManager;
 
     public static GameManager GetInstance() { 
         if (instance == null) {
@@ -43,5 +44,19 @@ public class GameManager : MonoBehaviour
 
     public DataManager GetDataManager() {
         return dataManager;
+    }
+
+    public WeaponManager GetWeaponManager() {
+        return weaponManager;
+    }
+
+    public void AddMoneyUI(MoneyUI moneyUI) {
+        if (!uiManager.moneyUI.Contains(moneyUI)) {
+            uiManager.moneyUI.Add(moneyUI);
+
+            // Set money so that the ui updates
+            dataManager.SetMoney(dataManager.Money);
+        }
+        
     }
 }

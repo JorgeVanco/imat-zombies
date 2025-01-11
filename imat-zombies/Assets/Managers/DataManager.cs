@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-    private int lifes = 5;
-    private int money = 0;
-    private int score = 0;
+
+    public int Money { get; private set; }
+    public int Score { get; private set; }
     public int TotalAmmo = 90;
     
     private int roundMultiplier = 1;
@@ -24,27 +24,31 @@ public class DataManager : MonoBehaviour
 
 
     public void AddToScore(int scoreVal) {
-        SetScore(score + scoreVal);
+        SetScore(Score + scoreVal);
     }
 
     public void ResetScore() {
         SetScore(0);
     }
     private void SetScore(int newScore) {
-        score = newScore;
-        uiManager.UpdateScore(score);
+        Score = newScore;
+        uiManager.UpdateScore(Score);
     }
 
     public void AddToMoney(int moneyVal) {
-        SetMoney(money + moneyVal);
+        SetMoney(Money + moneyVal);
+    }
+
+    public void RemoveMoney(int moneyVal) {
+        SetMoney(Money - moneyVal);
     }
 
     public void ResetMoney() {
         SetMoney(0);
     }
-    private void SetMoney(int newMoney) {
-        money = newMoney;
-        uiManager.UpdateMoney(money);
+    public void SetMoney(int newMoney) {
+        Money = newMoney;
+        uiManager.UpdateMoney(Money);
     }
 
     public void OnZombieKilled() {

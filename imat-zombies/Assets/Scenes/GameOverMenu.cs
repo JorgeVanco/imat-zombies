@@ -10,7 +10,7 @@ public class GameOverMenu : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        // Carga la escena del menú principal
+        // Carga la escena del menï¿½ principal
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }

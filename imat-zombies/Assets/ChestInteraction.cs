@@ -1,28 +1,41 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.EventSystems;
+using System.Linq;
+using System.Collections.Generic;
 public class ChestInteraction : MonoBehaviour
 {
-    [SerializeField] private string buyingMenuSceneName = "BuyingMenu"; 
+    private string buyingMenuSceneName = "BuyingMenu"; 
+    // public Canvas buyingMenuCanvas;
     private bool playerIsNearby = false;
+    private float interactionRadius = 5f;
 
     void Update()
     {
-        if (playerIsNearby && Input.GetKeyDown(KeyCode.E))
+
+        CheckIfPlayerNearby();
+        
+        if (playerIsNearby && Input.GetKeyDown(KeyCode.E) && SceneManager.GetActiveScene().name != buyingMenuSceneName)
         {
-            OpenBuyingMenu();
+            Debug.Log(SceneManager.GetActiveScene().name);
+            int activeScenes = SceneManager.sceneCount;
+            if (activeScenes == 1) {
+
+                OpenBuyingMenu();
+            }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerIsNearby = true;
+    private void CheckIfPlayerNearby() {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null) {
+            // Calculate the distance between the chest and the player
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            playerIsNearby = distance <= interactionRadius;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -30,9 +43,13 @@ public class ChestInteraction : MonoBehaviour
         }
     }
 
-    private void OpenBuyingMenu()
+
+    public void OpenBuyingMenu()
     {
         Time.timeScale = 0f;
-        SceneManager.LoadScene(buyingMenuSceneName, LoadSceneMode.Additive); 
+        SceneManager.LoadScene(buyingMenuSceneName, LoadSceneMode.Additive);
+        
     }
+    
+    
 }

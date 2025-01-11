@@ -93,7 +93,7 @@ public class Zombie : MonoBehaviour, IDamageable
             startWalk();
         }
         else {
-            if (Vector3.Distance(transform.position, target.transform.position) > 1 && !attacking) {
+            if (Vector3.Distance(transform.position, target.transform.position) > 1.5f && !attacking) {
                 RotateTowardsTarget();
                 Move(speed * 2);
                 startRun();
