@@ -33,9 +33,6 @@ public class Zombie : MonoBehaviour, IDamageable
         currentLife = maxLife;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-
-        // Keep using custom gravity but maintain other physics
-        rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         target = GameObject.Find("FPS");
@@ -44,10 +41,6 @@ public class Zombie : MonoBehaviour, IDamageable
 
     void Update() {
         ZombieBehaviour();
-    }
-    void FixedUpdate() {
-        HandleGroundCheck();
-        ApplyImprovedGravity();
     }
 
     void HandleGroundCheck() {
