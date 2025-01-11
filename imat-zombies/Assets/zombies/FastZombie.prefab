@@ -48,9 +48,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4343020610826642118, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6861921296739099886, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
       propertyPath: m_Name
       value: FastZombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861921296739099886, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 7967123748344135768, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
       propertyPath: speed
@@ -68,6 +76,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6861921296739099886, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1847501099429938403}
+    - targetCorrespondingSourceObject: {fileID: 6861921296739099886, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2592966475884378089}
   m_SourcePrefab: {fileID: 100100000, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
 --- !u!1 &2195477950290920328 stripped
 GameObject:
@@ -86,6 +97,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49f7ddf597d499468152332da193c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  damage: 10
-  life: 100
+  GroundCheck: {fileID: 4906225228307912491}
+  GroundDistance: 0.2
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!54 &2592966475884378089
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2195477950290920328}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!4 &4906225228307912491 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 386182953518182477, guid: 9d4c0ee0d6517b44abb38c2b83ee0bac, type: 3}
+  m_PrefabInstance: {fileID: 4705582664111449958}
+  m_PrefabAsset: {fileID: 0}
