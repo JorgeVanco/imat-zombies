@@ -58,6 +58,6 @@ public class UIManager : MonoBehaviour
     }
 
     public void UpdateMoney(int value) {
-        moneyUI.UpdateMoneyText(value);
+        moneyUI.UpdateMoneyText(value); 
     }
 }

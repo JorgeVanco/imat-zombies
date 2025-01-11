@@ -3890,12 +3890,25 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 2.677652, y: 1.7329266, z: 1.535099}
   m_Center: {x: 0.00639081, y: 1.0259076, z: 0.0045719147}
+--- !u!114 &469422923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469422919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9460b6de3be1afa43a27e57b7b139644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buyingMenuSceneName: BuyingMenu
 --- !u!1001 &469570106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7318,6 +7331,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6200720779111275133, guid: 1083f87f08232f541942f4a22a00127e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 469422922}
+    - targetCorrespondingSourceObject: {fileID: 6200720779111275133, guid: 1083f87f08232f541942f4a22a00127e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 469422923}
   m_SourcePrefab: {fileID: 100100000, guid: 1083f87f08232f541942f4a22a00127e, type: 3}
 --- !u!1 &895125276
 GameObject:
@@ -7562,7 +7578,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Money: 0'
+  m_text: 'Money: 100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
