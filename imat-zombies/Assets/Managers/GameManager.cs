@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,6 +33,13 @@ public class GameManager : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoToMainMenu();
+        }
+    }
 
     public UIManager GetUIManager() {
         return uiManager;
@@ -58,5 +65,10 @@ public class GameManager : MonoBehaviour
             dataManager.SetMoney(dataManager.Money);
         }
         
+    }
+
+    private void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
